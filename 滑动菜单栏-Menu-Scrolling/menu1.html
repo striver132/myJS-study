@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>滑动菜单栏</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f5f5f5;
+      }
+      .menu-item {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 800px;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 24px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 24px;
+        color: #333;
+      }
+
+      .menu-wrapper {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .menu-container {
+        display: flex;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        padding: 16px 0;
+      }
+
+      .menu-items {
+        display: flex;
+        gap: 16px;
+        padding: 0 40px;
+      }
+
+      .menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 100px;
+        padding: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .menu-item:hover {
+        background-color: #f0f0f0;
+        transform: translateY(-5px);
+      }
+
+      .menu-item.active {
+        background-color: #e6f7ff;
+      }
+
+      .icon-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        margin-bottom: 8px;
+        color: #1677ff;
+      }
+
+      .menu-item:hover .icon-wrapper {
+        background-color: #e6f7ff;
+      }
+
+      .menu-item-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: white;
+        border: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        transition: all 0.2s ease;
+      }
+
+      .nav-button:hover {
+        background-color: #f5f5f5;
+      }
+
+      .nav-button:focus {
+        outline: none;
+      }
+
+      .nav-button.left {
+        left: 5px;
+      }
+
+      .nav-button.right {
+        right: 5px;
+      }
+
+      .nav-button.hidden {
+        display: none;
+      }
+
+      /* 动画效果 */
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .menu-item:active .icon-wrapper {
+        animation: bounce 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>滑动菜单栏</h1>
+      <div class="menu-wrapper">
+        <button class="nav-button left hidden" id="leftBtn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="menu-container" id="menuContainer">
+          <div class="menu-items" id="menuItems">
+            <!-- 菜单项将通过JavaScript动态生成 -->
+          </div>
+        </div>
+
+        <button class="nav-button right" id="rightBtn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // 菜单项数据
+      const menuData = [
+        { id: 1, icon: "📷", label: "相机" },
+        { id: 2, icon: "🖼️", label: "图片" },
+        { id: 3, icon: "📄", label: "文档" },
+        { id: 4, icon: "🎵", label: "音乐" },
+        { id: 5, icon: "🎬", label: "视频" },
+        { id: 6, icon: "📅", label: "日历" },
+        { id: 7, icon: "🗺️", label: "地图" },
+        { id: 8, icon: "⚙️", label: "设置" },
+        { id: 9, icon: "🛒", label: "购物" },
+        { id: 10, icon: "🧭", label: "导航" },
+        { id: 11, icon: "🎨", label: "绘画" },
+        { id: 12, icon: "☕", label: "咖啡" },
+      ];
+
+      // 获取DOM元素
+      const menuContainer = document.getElementById("menuContainer");
+      const menuItems = document.getElementById("menuItems");
+      const leftBtn = document.getElementById("leftBtn");
+      const rightBtn = document.getElementById("rightBtn");
+
+      // 生成菜单项
+      function renderMenuItems() {
+        menuItems.innerHTML = "";
+
+        menuData.forEach((item) => {
+          const menuItem = document.createElement("div");
+          menuItem.className = "menu-item";
+          menuItem.setAttribute("data-id", item.id);
+
+          const iconWrapper = document.createElement("div");
+          iconWrapper.className = "icon-wrapper";
+          iconWrapper.textContent = item.icon;
+
+          const label = document.createElement("span");
+          label.className = "menu-item-label";
+          label.textContent = item.label;
+
+          menuItem.appendChild(iconWrapper);
+          menuItem.appendChild(label);
+
+          // 添加点击事件
+          menuItem.addEventListener("click", () => {
+            // 移除所有active类
+            document.querySelectorAll(".menu-item").forEach((el) => {
+              el.classList.remove("active");
+            });
+
+            // 添加active类到当前项
+            menuItem.classList.add("active");
+
+            // 这里可以添加其他点击后的逻辑
+            console.log(`选择了: ${item.label}`);
+          });
+
+          menuItems.appendChild(menuItem);
+        });
+      }
+
+      // 初始化菜单
+      renderMenuItems();
+
+      // 滚动相关变量
+      let scrollAmount = 0;
+      const scrollStep = 300; // 每次滚动的距离
+
+      // 检查滚动按钮显示状态
+      function checkScrollButtons() {
+        leftBtn.classList.toggle("hidden", scrollAmount <= 0);
+        rightBtn.classList.toggle(
+          "hidden",
+          scrollAmount >= menuItems.scrollWidth - menuContainer.clientWidth
+        );
+      }
+
+      // 初始检查
+      checkScrollButtons();
+
+      // 向左滚动
+      leftBtn.addEventListener("click", () => {
+        scrollAmount = Math.max(0, scrollAmount - scrollStep);
+        menuContainer.scrollTo({
+          left: scrollAmount,
+          behavior: "smooth",
+        });
+
+        setTimeout(checkScrollButtons, 300);
+      });
+
+      // 向右滚动
+      rightBtn.addEventListener("click", () => {
+        scrollAmount = Math.min(
+          menuItems.scrollWidth - menuContainer.clientWidth,
+          scrollAmount + scrollStep
+        );
+        menuContainer.scrollTo({
+          left: scrollAmount,
+          behavior: "smooth",
+        });
+
+        setTimeout(checkScrollButtons, 300);
+      });
+
+      // 监听滚动事件
+      menuContainer.addEventListener("scroll", () => {
+        scrollAmount = menuContainer.scrollLeft;
+        checkScrollButtons();
+      });
+
+      // 监听窗口大小变化
+      window.addEventListener("resize", checkScrollButtons);
+
+      // 添加触摸滑动支持
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      menuContainer.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        },
+        false
+      );
+
+      menuContainer.addEventListener(
+        "touchend",
+        (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipe();
+        },
+        false
+      );
+
+      function handleSwipe() {
+        const swipeDistance = touchStartX - touchEndX;
+
+        if (Math.abs(swipeDistance) > 50) {
+          // 最小滑动距离
+          if (swipeDistance > 0) {
+            // 向左滑动，内容向右移动
+            rightBtn.click();
+          } else {
+            // 向右滑动，内容向左移动
+            leftBtn.click();
+          }
+        }
+      }
+
+      let isMouseDown = false;
+      let startX, scrollLeft;
+
+      menuContainer.addEventListener("mousedown", (e) => {
+        isMouseDown = true;
+        menuContainer.classList.add("active"); // 可用于加上样式，如改变鼠标样式
+        startX = e.pageX - menuContainer.offsetLeft;
+        scrollLeft = menuContainer.scrollLeft;
+      });
+
+      menuContainer.addEventListener("mouseleave", () => {
+        isMouseDown = false;
+        menuContainer.classList.remove("active");
+      });
+
+      menuContainer.addEventListener("mouseup", () => {
+        isMouseDown = false;
+        menuContainer.classList.remove("active");
+      });
+
+      menuContainer.addEventListener("mousemove", (e) => {
+        if (!isMouseDown) return;
+        e.preventDefault();
+        const x = e.pageX - menuContainer.offsetLeft;
+        const walk = (x - startX) * 2; // 乘2可以加快滑动速度
+        menuContainer.scrollLeft = scrollLeft - walk;
+      });
+    </script>
+  </body>
+</html>
