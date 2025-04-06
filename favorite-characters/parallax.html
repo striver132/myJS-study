@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我喜欢的角色</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        :root {
+            --neon-green: #308b52;
+            --dark-bg: #000000;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .parallax-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(17,17,17,0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(17,17,17,0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-green);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+        }
+
+        .hero-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--neon-green);
+            color: var(--dark-bg);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .character {
+            position: absolute;
+            right: 10%;
+            bottom: 0;
+            width: 400px;
+            z-index: 2;
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+        }
+
+        .floating-circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--neon-green);
+            opacity: 0.1;
+            filter: blur(20px);
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: 20%;
+            right: 10%;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 30%;
+            left: 15%;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .character {
+                width: 300px;
+                right: 5%;
+            }
+
+            .nav-header {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* 添加新的动画样式 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .scroll-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 0 10%;
+        }
+
+        .scroll-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .scroll-content.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-image {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .scroll-image.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .scroll-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-dot.active {
+            background: var(--neon-green);
+            transform: scale(1.5);
+        }
+
+        .section-hanLi {
+            background: linear-gradient(-90deg, rgba(0, 0, 0, 0.8), rgba(1, 56, 10, 0.95));
+        }
+
+        .section-wangLin {
+            background: linear-gradient(-90deg, rgba(0, 0, 0, 0.8), rgba(186, 4, 4, 0.95));
+        }
+
+        .section-qinMu{
+            background: linear-gradient(-90deg, rgba(0, 0, 0, 0.8), rgba(232, 232, 232, 0.95));
+        }
+        /* 平滑滚动效果 */
+        html {
+            scroll-behavior: smooth;
+        }
+        .guodu{
+
+        }
+    </style>
+</head>
+<body>
+    <div class="parallax-container">
+        <div class="grid-overlay"></div>
+        
+        <header class="nav-header">
+            <a href="#" class="logo">我喜欢的角色</a>
+            <nav class="nav-links">
+                <a href="#">首页</a>
+                <a href="#">韩立</a>
+                <a href="#">王林</a>
+                <a href="#">秦牧</a>         
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">我喜欢的角色</h1>
+                <p class="hero-text">
+                    速速追番
+                </p>
+                <a href="#" class="cta-button">b</a>
+                <a href="#" class="cta-button">t</a>
+            </div>
+
+            <img src="Zhang.png" alt="Character" class="character">
+
+            <div class="floating-circles">
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
+            </div>
+        </section>
+    </div>
+
+    <section id="hanLi" class="scroll-section section-hanLi">
+        <div class="scroll-content">
+            <h2 class="hero-title">韩立</h2>
+            <p class="hero-text">
+                来自普通山村的韩立，经过家中亲戚推荐进入当地的江湖门派七玄门，又被门派中的长老墨居仁看中成为其弟子，每日修炼名为《长春功》的口诀。期间随着同伴的消失而发现师父的可疑之处，另外偶然得到了一瓶能催化药草的绿色药瓶，以及救下门派师兄厉飞雨并与其结为知己。某日与师父摊牌对决，不慎战败，本该遭其毒手却侥幸存活下来，在其合作者余子童口中得知自己练就了一身修仙技能及墨居仁的真相后将其灭口。心想重获自由，但读完师父的遗书后才发现自己被下的毒还没有解完，而且要远行找到其家人才可获得真正解药。得知此事的韩立决定完成师父的遗愿从而拯救自己，从此踏上了修仙之路。
+            </p>
+            <div class="scroll-image">
+                <img src="hanli-jieDan.png" alt="hanLi Us" style="max-width: 100%; border-radius: 20px;">
+            </div>
+        </div>
+    </section>
+    <div class="guodu"></div>
+    <section id="wangLin" class="scroll-section section-wangLin">
+        <div class="scroll-content">
+            <h2 class="hero-title">王林</h2>
+            <p class="hero-text">
+                王林年幼时因天资不够，未被恒岳派收为弟子，其心存不甘，后凭借一己之坚毅踏上修仙之路。他在修仙途中历经无数艰难险阻，与诸多强敌对抗，逐渐成长。王林在求仙问道的过程中，不断探索自身的秘密，解开身世之谜，最终成为一代强者。在这个过程中，他经历了爱情、友情的考验，也面临着无数生死危机，但始终坚守本心，追求更高的修行境界。凭着其聪睿的心智，一步一步走向巅峰，凭一己之力，扬名修真界。
+            </p>
+            <div class="scroll-image">
+                <img src="wanglin.png" alt="Our wangLin" style="max-width: 100%; border-radius: 20px;">
+            </div>
+        </div>
+    </section>
+
+    <section id="qinMu" class="scroll-section section-qinMu">
+        <div class="scroll-content">
+            <h2 class="hero-title">秦牧</h2>
+            <p class="hero-text">
+                秦牧，第三十七代人皇，九天尊之牧天尊，阴险但一脸憨厚，不懂情趣的情场高手，极端的自信，穿越回史前宇宙，弥罗宫七公子，混沌成道，解决终极冷寂
+            </p>
+            <div class="scroll-image">
+                <img src="qinmu.png" alt="Our qinMu" style="max-width: 100%; border-radius: 20px;">
+            </div>
+        </div>
+    </section>
+
+    <div class="scroll-indicator">
+        <div class="scroll-dot" data-section="hero"></div>
+        <div class="scroll-dot" data-section="hanLi"></div>
+        <div class="scroll-dot" data-section="wangLin"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const parallaxContainer = document.querySelector('.parallax-container');
+            const character = document.querySelector('.character');
+            const circles = document.querySelectorAll('.circle');
+            const sections = document.querySelectorAll('.scroll-section, .hero');
+            const scrollDots = document.querySelectorAll('.scroll-dot');
+            
+            // 检测元素是否在视口中
+            const isElementInViewport = (el) => {
+                const rect = el.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight * 0.7) &&
+                    rect.bottom >= (window.innerHeight * 0.3)
+                );
+            };
+
+            // 更新滚动指示器
+            const updateScrollIndicator = () => {
+                sections.forEach((section, index) => {
+                    if (isElementInViewport(section)) {
+                        scrollDots.forEach(dot => dot.classList.remove('active'));
+                        scrollDots[index].classList.add('active');
+                    }
+                });
+            };
+
+            // 滚动动画
+            const handleScroll = () => {
+                const scrolled = window.pageYOffset;
+                
+                // 视差效果
+                if (character) {
+                    character.style.transform = `translateY(${scrolled * 0.3}px)`;
+                }
+                
+                circles.forEach((circle, index) => {
+                    const speed = (index + 1) * 0.2;
+                    circle.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+
+                // 内容动画
+                sections.forEach(section => {
+                    if (isElementInViewport(section)) {
+                        section.querySelector('.scroll-content')?.classList.add('active');
+                        section.querySelector('.scroll-image')?.classList.add('active');
+                    }
+                });
+
+                // 更新滚动指示器
+                updateScrollIndicator();
+            };
+
+            // 点击滚动指示器
+            scrollDots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const targetSection = document.querySelector(
+                        dot.dataset.section === 'hero' ? '.hero' : `#${dot.dataset.section}`
+                    );
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // 添加滚动事件监听
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // 初始化检查
+
+            // 字符浮动动画
+            if (character) {
+                let floatY = 0;
+                const floatAnimation = () => {
+                    floatY += 0.02;
+                    const currentTransform = character.style.transform;
+                    const translateY = currentTransform.match(/translateY\(([-\d.]+)px\)/);
+                    const scrollOffset = translateY ? parseFloat(translateY[1]) : 0;
+                    
+                    character.style.transform = `translateY(${scrollOffset + Math.sin(floatY) * 15}px)`;
+                    requestAnimationFrame(floatAnimation);
+                };
+                floatAnimation();
+            }
+        });
+    </script>
+</body>
+</html> 
