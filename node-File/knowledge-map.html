@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js 文件操作知识图谱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .knowledge-map {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .main-topic {
+            background: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .main-topic h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .subtopics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .subtopic {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            transition: transform 0.2s;
+        }
+
+        .subtopic:hover {
+            transform: translateY(-2px);
+        }
+
+        .subtopic h3 {
+            color: #3498db;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .subtopic ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .subtopic li {
+            margin: 0.5rem 0;
+            color: #666;
+            position: relative;
+        }
+
+        .subtopic li::before {
+            content: "•";
+            color: #3498db;
+            position: absolute;
+            left: -1rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .subtopics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Node.js 文件操作知识图谱</h1>
+        <div class="knowledge-map">
+            <div class="main-topic">
+                <h2>文件读写基本思路</h2>
+                <div class="subtopics">
+                    <div class="subtopic">
+                        <h3>模块引入</h3>
+                        <ul>
+                            <li>引入 fs 模块</li>
+                        </ul>
+                    </div>
+                    <div class="subtopic">
+                        <h3>操作方式</h3>
+                        <ul>
+                            <li>同步操作</li>
+                            <li>异步操作</li>
+                            <li>流式操作</li>
+                            <li>Promise/Async/Await</li>
+                        </ul>
+                    </div>
+                    <div class="subtopic">
+                        <h3>路径管理</h3>
+                        <ul>
+                            <li>相对路径</li>
+                            <li>绝对路径</li>
+                            <li>路径拼接</li>
+                        </ul>
+                    </div>
+                    <div class="subtopic">
+                        <h3>异常处理</h3>
+                        <ul>
+                            <li>try-catch</li>
+                            <li>错误回调</li>
+                            <li>Promise 错误处理</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
