@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移动应用界面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: #e8e9f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .app-container {
+            background-color: white;
+            width: 100%;
+            max-width: 380px;
+            border-radius: 30px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .greeting {
+            flex: 1;
+        }
+        
+        .greeting h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            line-height: 1.1;
+            margin-bottom: 5px;
+        }
+        
+        .date {
+            color: #aaa;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #eee;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .card {
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-mint {
+            background-color: #5eebd3;
+        }
+        
+        .card-blue {
+            background-color: #7cd5f5;
+        }
+        
+        .card-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .card-date {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .card-icon {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon-x {
+            position: relative;
+            width: 24px;
+            height: 24px;
+        }
+        
+        .icon-x:before, .icon-x:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: #333;
+            top: 50%;
+            left: 0;
+        }
+        
+        .icon-x:before {
+            transform: translateY(-50%) rotate(45deg);
+        }
+        
+        .icon-x:after {
+            transform: translateY(-50%) rotate(-45deg);
+        }
+        
+        .icon-controller {
+            position: relative;
+            width: 30px;
+            height: 20px;
+            border: 3px solid #333;
+            border-radius: 5px;
+        }
+        
+        .icon-controller:before {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: #333;
+            border-radius: 50%;
+            top: -10px;
+            right: -10px;
+        }
+        
+        .icon-controller:after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: #333;
+            border-radius: 50%;
+            top: -5px;
+            right: -15px;
+        }
+        
+        .circle-decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            right: -20px;
+            top: 10px;
+        }
+        
+        .circle-decoration:before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            top: 7px;
+            left: 7px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <div class="greeting">
+                <h1>Good<br>morning</h1>
+                <div class="date">10 May 2030</div>
+            </div>
+            <div class="avatar">
+                <img src="/placeholder.svg?height=40&width=40" alt="User avatar">
+            </div>
+        </div>
+        
+        <div class="card card-mint">
+            <div class="card-number">16</div>
+            <div class="card-title">Conduct<br>game testing</div>
+            <div class="card-date">18 May 2030</div>
+            <div class="card-icon">
+                <div class="icon-x"></div>
+            </div>
+            <div class="circle-decoration"></div>
+        </div>
+        
+        <div class="card card-blue">
+            <div class="card-number">15</div>
+            <div class="card-icon">
+                <div class="icon-controller"></div>
+            </div>
+            <div class="circle-decoration"></div>
+        </div>
+    </div>
+</body>
+</html>
