@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Effect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+        
+        .trigger-button {
+            padding: 12px 24px;
+            background-color: #4a4a4a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .trigger-button:hover {
+            background-color: #333;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .popup {
+            width: 80%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transform: scale(0.8);
+            transition: transform 0.3s;
+        }
+        
+        .popup-header {
+            padding: 16px 20px;
+            background: linear-gradient(to right, #333, #111);
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+        }
+        
+        .popup-content {
+            padding: 24px 20px;
+        }
+        
+        .progress-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .progress-text {
+            font-size: 18px;
+            color: #333;
+            margin-right: 12px;
+            white-space: nowrap;
+        }
+        
+        .progress-bar-container {
+            flex: 1;
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 100%;
+            background-color: #ff8c00;
+            border-radius: 5px;
+        }
+        
+        .upload-text {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 24px;
+        }
+        
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .view-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff8c00;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: background-color 0.3s;
+        }
+        
+        .view-button:hover {
+            background-color: #e67e00;
+        }
+        
+        .continue-button {
+            background: none;
+            border: none;
+            color: #777;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+        
+        .continue-button:hover {
+            color: #555;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .overlay.active .popup {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <button class="trigger-button" onclick="showPopup()">Show Popup</button>
+    
+    <div class="overlay" id="popup-overlay">
+        <div class="popup">
+            <div class="popup-header">
+                Create Simple Graph Design ✨
+            </div>
+            <div class="popup-content">
+                <div class="progress-container">
+                    <div class="progress-text">Dear! 31 images completed</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+                <div class="upload-text">Pictures uploaded!</div>
+                <div class="button-container">
+                    <button class="view-button" onclick="closePopup()">View Now</button>
+                    <button class="continue-button" onclick="closePopup()">Continue making other</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Show the popup when the page loads (uncomment to enable)
+        // window.onload = function() {
+        //     showPopup();
+        // };
+        
+        function showPopup() {
+            const overlay = document.getElementById('popup-overlay');
+            overlay.classList.add('active');
+        }
+        
+        function closePopup() {
+            const overlay = document.getElementById('popup-overlay');
+            overlay.classList.remove('active');
+        }
+        
+        // Close popup when clicking outside
+        document.getElementById('popup-overlay').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closePopup();
+            }
+        });
+    </script>
+</body>
+</html>
