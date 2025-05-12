@@ -1,0 +1,34 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.path-element {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background-color: dodgerblue;
+    border-radius: 50%; /* 初始为圆形 */
+    clip-path: path('M 50 50 L 150 50 L 100 150 Z'); /* 初始为三角形 */
+    transition: clip-path 1s ease-in-out, border-radius 1s ease-in-out, width 1s ease-in-out, height 1s ease-in-out;
+}
+
+.container:hover .path-element {
+    clip-path: path('M 20 20 C 20 100, 100 100, 100 20 C 100 -60, 20 -60, 20 20 Z'); /* 鼠标悬停时变为心形 */
+    border-radius: 0; /* 移除圆角 */
+    width: 80px;
+    height: 80px;
+}
