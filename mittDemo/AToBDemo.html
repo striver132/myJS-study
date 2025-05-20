@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+    <link rel="stylesheet" href="ab.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <template id="root">
+      <h2>A to B with Mitt</h2>
+      <div class="container">
+        <sender-component></sender-component>
+        <receiver-component></receiver-component>
+      </div>
+    </template>
+    <template id="sender">
+      <div class="sender">
+        <h3>A 组件</h3>
+        <input
+          v-model="message"
+          placeholder="输入信息"
+          @keyup.enter="sendMessage"
+        />
+        <button @click="sendMessage">发送</button>
+      </div>
+    </template>
+    <template id="receiver">
+      <div class="receiver">
+        <h3>B 组件</h3>
+        <p>接受: {{ receivedMessage || '还没有消息' }}</p>
+      </div>
+    </template>
+    <script>
+      // 创建 mitt 实例
+      const emitter = mitt();
+      const app = Vue.createApp({
+        template: "#root",
+      });
+
+      // 发送组件A
+      app.component("sender-component", {
+        template: "#sender",
+        data() {
+          return {
+            message: "",
+          };
+        },
+        methods: {
+          sendMessage() {
+            if (this.message.trim()) {
+              emitter.emit("messageSent", this.message);
+              this.message = "";
+            }
+          },
+        },
+      });
+
+      // 接收组件B
+      app.component("receiver-component", {
+        template: "#receiver",
+        data() {
+          return {
+            receivedMessage: "",
+          };
+        },
+        mounted() {
+          emitter.on("messageSent", (message) => {
+            this.receivedMessage = message;
+          });
+        },
+        beforeUnmount() {
+          emitter.off("messageSent"); // 清理事件监听
+        },
+      });
+
+      const root = app.mount("#app");
+    </script>
+  </body>
+</html>

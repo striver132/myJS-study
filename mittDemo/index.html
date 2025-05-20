@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <template id="root">
+      <div>
+        <h1>{{ message }}</h1>
+        <button @click="triggerEvent">Trigger Event</button>
+      </div>
+    </template>
+    <script>
+      // 创建 mitt 实例
+      const emitter = mitt();
+      const app = Vue.createApp({
+        template: "#root",
+        data() {
+          return {
+            message: "Waiting for event...",
+          };
+        },
+        methods: {
+          triggerEvent() {
+            // 触发事件并传递数据
+            emitter.emit("updateMessage", {
+              text: "Event triggered at " + new Date().toLocaleTimeString(),
+            });
+          },
+        },
+        // 在组件挂载时监听事件
+        mounted() {
+          // 监听 'updateMessage' 事件
+          emitter.on("updateMessage", (payload) => {
+            this.message = payload.text; // 更新数据
+          });
+        },
+        // 在组件销毁时移除事件监听（防止内存泄漏）
+        beforeUnmount() {
+          emitter.all.clear(); // 清除所有事件监听
+        },
+      });
+      const root = app.mount("#app");
+    </script>
+  </body>
+</html>
