@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Transition Timing Function 教学页面</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .container {
+      display: block;
+      margin-top: 20px;
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: #3498db;
+      transition-property: transform;
+      transition-duration: 1s;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      text-align: center;
+    }
+    .box:hover {
+      transform: translateX(300px);
+    }
+    .box-label {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+    .box-ease-out {
+      transition-timing-function: ease-out;
+    }
+    .box-ease {
+      transition-timing-function: ease;
+    }
+    .box-linear {
+      transition-timing-function: linear;
+    }
+    .box-ease-in {
+      transition-timing-function: ease-in;
+    }
+    .box-steps {
+      transition-timing-function: steps(10, end);
+    }
+    .box-ease-in-out {
+      transition-timing-function: ease-in-out;
+    }
+    .description {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .description h2 {
+      color: #333;
+    }
+    .description p {
+      color: #555;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <h1>CSS Transition Timing Function 演示</h1>
+  <div class="container">
+    <div>
+      <div class="box box-ease-out">ease-out</div>
+      <div class="box-label">ease-out</div>
+    </div>
+    <div>
+      <div class="box box-ease">ease</div>
+      <div class="box-label">ease</div>
+    </div>
+    <div>
+      <div class="box box-linear">linear</div>
+      <div class="box-label">linear</div>
+    </div>
+    <div>
+      <div class="box box-ease-in">ease-in</div>
+      <div class="box-label">ease-in</div>
+    </div>
+    <div>
+      <div class="box box-steps">steps(10, end)</div>
+      <div class="box-label">steps</div>
+    </div>
+    <div>
+      <div class="box box-ease-in-out">ease-in-out</div>
+      <div class="box-label">ease-in-out</div>
+    </div>
+  </div>
+  <div class="description">
+    <h2>关于 Transition Timing Function</h2>
+    <p><strong>ease-out</strong>：动画开始快，逐渐减慢，适合退出效果。</p>
+    <p><strong>ease</strong>：默认值，开始和结束稍慢，中间较快。</p>
+    <p><strong>linear</strong>：匀速运动，无加速或减速。</p>
+    <p><strong>ease-in</strong>：动画开始慢，逐渐加速，适合进入效果。</p>
+    <p><strong>steps</strong>：动画分步进行，steps(10, end)表示分10步完成，结束时跳跃。</p>
+    <p><strong>ease-in-out</strong>：开始和结束都慢，中间快，平滑过渡。</p>
+    <p>将鼠标悬停在方块上，观察不同过渡效果的动画差异！</p>
+  </div>
+</body>
+</html>
