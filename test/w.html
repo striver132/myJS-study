@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* 左侧边栏 */
+        .sidebar {
+            width: 80px;
+            background-color: #fff;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            gap: 30px;
+        }
+
+        .sidebar-icon {
+            width: 24px;
+            height: 24px;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .sidebar-icon:hover {
+            color: #374151;
+        }
+
+        .sidebar-icon.active {
+            color: #3b82f6;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 头部 */
+        .header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-icon {
+            width: 20px;
+            height: 20px;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .header-icon:hover {
+            color: #374151;
+        }
+
+        /* 搜索栏 */
+        .search-container {
+            padding: 20px 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #f9fafb;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: #9ca3af;
+        }
+
+        /* 标签页 */
+        .tabs {
+            padding: 0 30px;
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #111827;
+            background-color: #f3f4f6;
+        }
+
+        .tab:hover:not(.active) {
+            color: #374151;
+            background-color: #f9fafb;
+        }
+
+        /* 文件夹列表 */
+        .folder-list {
+            flex: 1;
+            padding: 20px 30px;
+            overflow-y: auto;
+        }
+
+        .folder-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 6px;
+            margin-bottom: 4px;
+        }
+
+        .folder-item:hover {
+            background-color: #f9fafb;
+        }
+
+        .folder-indent {
+            width: 20px;
+            height: 1px;
+            margin-right: 8px;
+        }
+
+        .folder-indent-1 {
+            margin-left: 20px;
+        }
+
+        .folder-indent-2 {
+            margin-left: 40px;
+        }
+
+        .folder-icon {
+            width: 16px;
+            height: 16px;
+            color: #6b7280;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .folder-name {
+            flex: 1;
+            font-size: 14px;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .folder-count {
+            background-color: #e5e7eb;
+            color: #6b7280;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 12px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* 连接线样式 */
+        .folder-item.nested::before {
+            content: '';
+            position: absolute;
+            left: 35px;
+            top: 0;
+            bottom: 50%;
+            width: 1px;
+            background-color: #e5e7eb;
+        }
+
+        .folder-item.nested {
+            position: relative;
+        }
+
+        .folder-item.nested::after {
+            content: '';
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            width: 15px;
+            height: 1px;
+            background-color: #e5e7eb;
+        }
+
+        /* SVG 图标 */
+        .icon {
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧边栏 -->
+        <div class="sidebar">
+            <svg class="sidebar-icon active" viewBox="0 0 24 24">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            
+            <svg class="sidebar-icon" viewBox="0 0 24 24">
+                <path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            
+            <svg class="sidebar-icon" viewBox="0 0 24 24">
+                <path d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            
+            <svg class="sidebar-icon" viewBox="0 0 24 24">
+                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+        </div>
+
+        <!-- 主内容区域 -->
+        <div class="main-content">
+            <!-- 头部 -->
+            <div class="header">
+                <h1>Knowledge Base</h1>
+                <div class="header-actions">
+                    <svg class="header-icon" viewBox="0 0 24 24">
+                        <path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <svg class="header-icon" viewBox="0 0 24 24">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 搜索栏 -->
+            <div class="search-container">
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+            </div>
+
+            <!-- 标签页 -->
+            <div class="tabs">
+                <button class="tab active">Folders</button>
+                <button class="tab">Tags</button>
+            </div>
+
+            <!-- 文件夹列表 -->
+            <div class="folder-list">
+                <!-- General Knowledge -->
+                <div class="folder-item">
+                    <svg class="folder-icon" viewBox="0 0 24 24">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="folder-name">General Knowledge</span>
+                    <span class="folder-count">10</span>
+                </div>
+
+                <!-- Onboarding -->
+                <div class="folder-item folder-indent-1 nested">
+                    <svg class="folder-icon" viewBox="0 0 24 24">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="folder-name">Onboarding</span>
+                    <span class="folder-count">3</span>
+                </div>
+
+                <!-- Subfolder 1 -->
+                <div class="folder-item folder-indent-2 nested">
+                    <svg class="folder-icon" viewBox="0 0 24 24">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="folder-name">Subfolder 1</span>
+                    <span class="folder-count">5</span>
+                </div>
+
+                <!-- Subfolder 2 -->
+                <div class="folder-item folder-indent-2 nested">
+                    <svg class="folder-icon" viewBox="0 0 24 24">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="folder-name">Subfolder 2</span>
+                    <span class="folder-count">10</span>
+                </div>
+
+                <!-- Integrations -->
+                <div class="folder-item folder-indent-1 nested">
+                    <svg class="folder-icon" viewBox="0 0 24 24">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="folder-name">Integrations</span>
+                </div>
+
+                <!-- Documents -->
+                <div class="folder-item folder-indent-1 nested">
+                    <svg class="folder-icon" viewBox="0 0 24 24">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="folder-name">Documents</span>
+                </div>
+
+                <!-- Onboarding Design -->
+                <div class="folder-item">
+                    <svg class="folder-icon" viewBox="0 0 24 24">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="folder-name">Onboarding Design</span>
+                </div>
+
+                <!-- Team Interviews -->
+                <div class="folder-item">
+                    <svg class="folder-icon" viewBox="0 0 24 24">
+                        <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                    <span class="folder-name">Team Interviews</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 简单的交互功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.folder-item').forEach(item => {
+            item.addEventListener('click', function() {
+                console.log('Clicked:', this.querySelector('.folder-name').textContent);
+            });
+        });
+    </script>
+</body>
+</html>
