@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draggable Product Layout</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <svg class="connection-lines" width="100%" height="100%">
+        <!-- <line class="connection-line" id="line1" x1="0" y1="0" x2="0" y2="0" stroke="#333" stroke-width="2"/>
+            <line class="connection-line" id="line2" x1="0" y1="0" x2="0" y2="0" stroke="#333" stroke-width="2"/>
+            <line class="connection-line" id="line3" x1="0" y1="0" x2="0" y2="0" stroke="#333" stroke-width="2"/>
+            <line class="connection-line" id="line4" x1="0" y1="0" x2="0" y2="0" stroke="#333" stroke-width="2"/> -->
+      </svg>
+
+      <div class="product-main" id="productMain">
+        <img src="all.png" alt="" width="100%" height="100%" />
+      </div>
+
+      <div class="detail-block" id="detail1" data-line="line1">
+        <img src="top.png" alt="" width="100%" height="100%" />
+      </div>
+
+      <div class="detail-block" id="detail2" data-line="line2">
+        <img src="down.png" alt="" width="100%" height="100%" />
+      </div>
+
+      <div class="detail-block" id="detail3" data-line="line3">
+        <img src="blask-silk.png" alt="" width="100%" height="100%" />
+      </div>
+
+      <div class="detail-block" id="detail4" data-line="line4">
+        <img src="shows.png" alt="" width="100%" height="100%" />
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
