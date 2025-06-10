@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环保先锋 - 智能垃圾分类系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="/placeholder.svg?height=40&width=40" alt="环保先锋logo">
+                <h1>环保先锋</h1>
+            </div>
+            <nav>
+                <button id="menu-toggle" aria-label="菜单">☰</button>
+                <ul id="main-nav">
+                    <li><a href="index.html" class="active">首页</a></li>
+                    <li><a href="pages/disposal.html">垃圾投放</a></li>
+                    <li><a href="pages/classification.html">分类查询</a></li>
+                    <li><a href="pages/points.html">积分兑换</a></li>
+                    <li><a href="pages/profile.html" class="profile-link">个人中心</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>让地球更美好，从垃圾分类开始</h2>
+                    <p>使用我们的智能垃圾分类系统，轻松识别垃圾类型，获取积分奖励，为环保贡献力量</p>
+                    <div class="hero-buttons">
+                        <a href="pages/disposal.html" class="btn primary">立即投放</a>
+                        <a href="pages/classification.html" class="btn secondary">查询分类</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="/placeholder.svg?height=300&width=400" alt="垃圾分类示意图">
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">核心功能</h2>
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="/placeholder.svg?height=60&width=60" alt="垃圾分类图标">
+                        </div>
+                        <h3>垃圾分类指南</h3>
+                        <p>详细的垃圾分类知识，帮助您正确分类各种垃圾</p>
+                        <a href="pages/guide.html" class="feature-link">查看详情</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="/placeholder.svg?height=60&width=60" alt="积分查询图标">
+                        </div>
+                        <h3>积分查询</h3>
+                        <p>查看您的环保积分，了解积分获取历史和使用记录</p>
+                        <a href="pages/points.html" class="feature-link">查看积分</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="/placeholder.svg?height=60&width=60" alt="环保知识图标">
+                        </div>
+                        <h3>环保知识</h3>
+                        <p>获取最新环保资讯，学习更多环保小知识</p>
+                        <a href="pages/knowledge.html" class="feature-link">了解更多</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="eco-news">
+            <div class="container">
+                <h2 class="section-title">环保资讯</h2>
+                <div class="news-carousel" id="news-carousel">
+                    <div class="news-item">
+                        <img src="/placeholder.svg?height=180&width=320" alt="环保新闻1">
+                        <div class="news-content">
+                            <h3>全国垃圾分类新规实施</h3>
+                            <p>新的垃圾分类标准将于下月在全国范围内实施，本文详细解读新规内容...</p>
+                            <span class="news-date">2023-06-05</span>
+                        </div>
+                    </div>
+                    <div class="news-item">
+                        <img src="/placeholder.svg?height=180&width=320" alt="环保新闻2">
+                        <div class="news-content">
+                            <h3>塑料污染防治行动计划发布</h3>
+                            <p>国家发布塑料污染防治行动计划，将逐步减少一次性塑料制品的使用...</p>
+                            <span class="news-date">2023-05-22</span>
+                        </div>
+                    </div>
+                    <div class="news-item">
+                        <img src="/placeholder.svg?height=180&width=320" alt="环保新闻3">
+                        <div class="news-content">
+                            <h3>可回收物资源化利用率提升</h3>
+                            <p>去年我国可回收物资源化利用率同比提升15%，再生资源产业规模不断扩大...</p>
+                            <span class="news-date">2023-05-10</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button id="prev-news" aria-label="上一条新闻">◀</button>
+                    <div class="carousel-dots" id="carousel-dots"></div>
+                    <button id="next-news" aria-label="下一条新闻">▶</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <h2 class="section-title">环保成果</h2>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-number" id="users-count">10,000+</div>
+                        <div class="stat-label">活跃用户</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="waste-count">50,000kg</div>
+                        <div class="stat-label">已分类垃圾</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="trees-count">1,200</div>
+                        <div class="stat-label">相当于种植树木</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>环保先锋致力于通过技术创新推动垃圾分类和环境保护，让每个人都能轻松参与环保行动。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <p>电话: 400-123-4567</p>
+                    <p>邮箱: contact@ecopioneers.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="微信">微信</a>
+                        <a href="#" aria-label="微博">微博</a>
+                        <a href="#" aria-label="抖音">抖音</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 环保先锋 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

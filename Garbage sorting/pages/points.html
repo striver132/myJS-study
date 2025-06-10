@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>积分兑换 - 环保先锋</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/points.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="/placeholder.svg?height=40&width=40" alt="环保先锋logo">
+                <h1>环保先锋</h1>
+            </div>
+            <nav>
+                <button id="menu-toggle" aria-label="菜单">☰</button>
+                <ul id="main-nav">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="disposal.html">垃圾投放</a></li>
+                    <li><a href="classification.html">分类查询</a></li>
+                    <li><a href="points.html" class="active">积分兑换</a></li>
+                    <li><a href="profile.html" class="profile-link">个人中心</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h2>积分兑换</h2>
+                <p>用您的环保积分兑换各种实用好礼</p>
+            </div>
+        </section>
+
+        <section class="points-overview">
+            <div class="container">
+                <div class="points-card">
+                    <div class="points-info">
+                        <div class="points-balance">
+                            <h3>我的积分</h3>
+                            <div class="points-number" id="user-points">1,250</div>
+                        </div>
+                        <div class="points-actions">
+                            <a href="profile.html#points-history" class="btn secondary">积分明细</a>
+                            <button id="refresh-points" class="btn secondary">刷新积分</button>
+                        </div>
+                    </div>
+                    <div class="points-level">
+                        <h3>环保等级</h3>
+                        <div class="level-info">
+                            <div class="level-badge" id="user-level-badge">
+                                <img src="/placeholder.svg?height=60&width=60" alt="环保等级徽章">
+                            </div>
+                            <div class="level-details">
+                                <div class="level-name" id="user-level-name">环保达人</div>
+                                <div class="level-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="level-progress-fill" style="width: 75%;"></div>
+                                    </div>
+                                    <div class="progress-text">距离下一等级还需 <span id="points-to-next-level">250</span> 积分</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="exchange-section">
+            <div class="container">
+                <div class="section-header">
+                    <h3>积分兑换</h3>
+                    <div class="filter-options">
+                        <select id="category-filter">
+                            <option value="all">全部分类</option>
+                            <option value="daily">日用品</option>
+                            <option value="digital">数码产品</option>
+                            <option value="food">食品饮料</option>
+                            <option value="ticket">优惠券</option>
+                        </select>
+                        <select id="points-filter">
+                            <option value="all">全部积分</option>
+                            <option value="low">500以下</option>
+                            <option value="medium">500-1000</option>
+                            <option value="high">1000以上</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="exchange-items" id="exchange-items">
+                    <div class="exchange-item" data-category="daily" data-points="300">
+                        <div class="item-image">
+                            <img src="/placeholder.svg?height=150&width=150" alt="环保购物袋">
+                        </div>
+                        <div class="item-info">
+                            <h4>环保购物袋</h4>
+                            <p>可重复使用的环保购物袋，减少塑料袋使用</p>
+                            <div class="item-points">300 积分</div>
+                            <button class="btn primary exchange-btn">立即兑换</button>
+                        </div>
+                    </div>
+                    <div class="exchange-item" data-category="daily" data-points="500">
+                        <div class="item-image">
+                            <img src="/placeholder.svg?height=150&width=150" alt="不锈钢吸管套装">
+                        </div>
+                        <div class="item-info">
+                            <h4>不锈钢吸管套装</h4>
+                            <p>环保不锈钢吸管，替代一次性塑料吸管</p>
+                            <div class="item-points">500 积分</div>
+                            <button class="btn primary exchange-btn">立即兑换</button>
+                        </div>
+                    </div>
+                    <div class="exchange-item" data-category="food" data-points="800">
+                        <div class="item-image">
+                            <img src="/placeholder.svg?height=150&width=150" alt="有机水果礼盒">
+                        </div>
+                        <div class="item-info">
+                            <h4>有机水果礼盒</h4>
+                            <p>精选有机水果，健康美味</p>
+                            <div class="item-points">800 积分</div>
+                            <button class="btn primary exchange-btn">立即兑换</button>
+                        </div>
+                    </div>
+                    <div class="exchange-item" data-category="ticket" data-points="600">
+                        <div class="item-image">
+                            <img src="/placeholder.svg?height=150&width=150" alt="电影票兑换券">
+                        </div>
+                        <div class="item-info">
+                            <h4>电影票兑换券</h4>
+                            <p>全国通用电影票兑换券一张</p>
+                            <div class="item-points">600 积分</div>
+                            <button class="btn primary exchange-btn">立即兑换</button>
+                        </div>
+                    </div>
+                    <div class="exchange-item" data-category="digital" data-points="1500">
+                        <div class="item-image">
+                            <img src="/placeholder.svg?height=150&width=150" alt="太阳能充电宝">
+                        </div>
+                        <div class="item-info">
+                            <h4>太阳能充电宝</h4>
+                            <p>环保太阳能充电宝，户外活动必备</p>
+                            <div class="item-points">1500 积分</div>
+                            <button class="btn primary exchange-btn">立即兑换</button>
+                        </div>
+                    </div>
+                    <div class="exchange-item" data-category="digital" data-points="2000">
+                        <div class="item-image">
+                            <img src="/placeholder.svg?height=150&width=150" alt="智能垃圾分类助手">
+                        </div>
+                        <div class="item-info">
+                            <h4>智能垃圾分类助手</h4>
+                            <p>家用智能垃圾分类助手，语音识别垃圾类型</p>
+                            <div class="item-points">2000 积分</div>
+                            <button class="btn primary exchange-btn">立即兑换</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pagination">
+                    <button class="pagination-btn" id="prev-page" disabled>上一页</button>
+                    <div class="page-numbers" id="page-numbers">
+                        <span class="page-number active">1</span>
+                        <span class="page-number">2</span>
+                        <span class="page-number">3</span>
+                    </div>
+                    <button class="pagination-btn" id="next-page">下一页</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-to-earn">
+            <div class="container">
+                <h3>如何获取积分</h3>
+                <div class="earn-methods">
+                    <div class="earn-method">
+                        <div class="earn-icon">
+                            <img src="/placeholder.svg?height=80&width=80" alt="垃圾分类图标">
+                        </div>
+                        <h4>垃圾分类投放</h4>
+                        <p>正确分类并投放垃圾，每次可获得5-20积分</p>
+                    </div>
+                    <div class="earn-method">
+                        <div class="earn-icon">
+                            <img src="/placeholder.svg?height=80&width=80" alt="每日签到图标">
+                        </div>
+                        <h4>每日签到</h4>
+                        <p>每日登录签到，可获得5积分，连续签到额外奖励</p>
+                    </div>
+                    <div class="earn-method">
+                        <div class="earn-icon">
+                            <img src="/placeholder.svg?height=80&width=80" alt="环保知识图标">
+                        </div>
+                        <h4>环保知识问答</h4>
+                        <p>参与环保知识问答，答对题目可获得积分</p>
+                    </div>
+                    <div class="earn-method">
+                        <div class="earn-icon">
+                            <img src="/placeholder.svg?height=80&width=80" alt="邀请好友图标">
+                        </div>
+                        <h4>邀请好友</h4>
+                        <p>邀请好友使用，每成功邀请一人可获得50积分</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>环保先锋致力于通过技术创新推动垃圾分类和环境保护，让每个人都能轻松参与环保行动。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <p>电话: 400-123-4567</p>
+                    <p>邮箱: contact@ecopioneers.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="微信">微信</a>
+                        <a href="#" aria-label="微博">微博</a>
+                        <a href="#" aria-label="抖音">抖音</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 环保先锋 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="exchange-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>确认兑换</h3>
+            <div class="exchange-details">
+                <div class="exchange-item-image">
+                    <img id="modal-item-image" src="/placeholder.svg?height=100&width=100" alt="兑换商品">
+                </div>
+                <div class="exchange-item-details">
+                    <h4 id="modal-item-name">商品名称</h4>
+                    <p id="modal-item-points">所需积分：<span>0</span></p>
+                    <p id="modal-user-points">您的积分：<span>0</span></p>
+                </div>
+            </div>
+            <div class="exchange-form">
+                <div class="form-group">
+                    <label for="exchange-name">姓名</label>
+                    <input type="text" id="exchange-name" placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label for="exchange-phone">手机号码</label>
+                    <input type="tel" id="exchange-phone" placeholder="请输入您的手机号码">
+                </div>
+                <div class="form-group">
+                    <label for="exchange-address">收货地址</label>
+                    <textarea id="exchange-address" placeholder="请输入您的详细收货地址"></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn secondary" id="cancel-exchange">取消</button>
+                <button class="btn primary" id="confirm-exchange">确认兑换</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/points.js"></script>
+</body>
+</html>
